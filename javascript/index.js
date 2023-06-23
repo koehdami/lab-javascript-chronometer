@@ -51,7 +51,7 @@ function setSplitBtn() {
   btnRightElement.className = "btn split"
   btnRightElement.innerText = "SPLIT"
 }
-
+//
 function setStartBtn() {
   btnLeftElement.className = "btn start";
   btnLeftElement.innerText = "START"

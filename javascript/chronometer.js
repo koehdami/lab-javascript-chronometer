@@ -42,7 +42,7 @@ class Chronometer {
   reset() {
     this.currenTime = 0;
   }
-
+//
   split() {
     let min = this.computeTwoDigitNumber(getMinutes())
     let sec = this.computeTwoDigitNumber(getSeconds())
