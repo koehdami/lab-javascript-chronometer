@@ -14,31 +14,46 @@ const milUniElement = document.getElementById('milUni');
 const splitsElement = document.getElementById('splits');
 
 function printTime() {
-  const seconds = chronometer.printMinutes();
+  // get Seconds and send to screen
+  const seconds = printSeconds();
   secDecElement.innerHTML = seconds[0];
   secUniElement.innerHTML = seconds[1];
+
+  //get minutes and send to screen
+  const minutes = printMinutes()
+  minUniElement.innerHTML = minutes[1];
+  minDecElement.innerHTML = minutes[0];
+
+  const milliseconds = printMilliseconds()
+  milUniElement.innerHTML = milliseconds[1];
+  milDecElement.innerHTML = milliseconds[0];
 }
 
 function printMinutes() {
-  let minutes = chronometer.getMinutes()
+  const minutes = chronometer.getMinutes();
   return chronometer.computeTwoDigitNumber(minutes)
 }
 
 function printSeconds() {
-  return chronometer.computeTwoDigitNumber(chronometer.getSeconds())
+  const seconds = chronometer.getSeconds();
+  return chronometer.computeTwoDigitNumber(seconds)
 }
 
 // ==> BONUS
 function printMilliseconds() {
-  // ... your code goes here
+  const milliseconds = chronometer.getMilliseconds();
+  return chronometer.computeTwoDigitNumber(milliseconds)
 }
 
 function printSplit() {
-  // ... your code goes here
+  const listItem = document.createElement("li");
+  listItem.classList = "list-item"
+  listItem.innerHTML = chronometer.split()
+  splitsElement.appendChild(listItem)
 }
 
 function clearSplits() {
-  // ... your code goes here
+  splitsElement.innerHTML = ""
 }
 
 function setStopBtn() {
@@ -58,7 +73,7 @@ function setStartBtn() {
 }
 
 function setResetBtn() {
-  btnRightElement.className = "btn reset"
+    btnRightElement.className = "btn reset"
     btnRightElement.innerText = "RESET"
 }
 
@@ -70,9 +85,17 @@ btnLeftElement.addEventListener('click', () => {
   }else{
     setStartBtn()
     setResetBtn()
-  }
+    chronometer.stop()
+}
 });
 
 // Reset/Split Button
 btnRightElement.addEventListener('click', () => {
+  if (btnLeftElement.className === "btn start"){
+    chronometer.reset()
+    printTime()
+    clearSplits()
+  }else{
+    printSplit()
+  }
 });

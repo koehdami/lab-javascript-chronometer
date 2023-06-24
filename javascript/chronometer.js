@@ -5,24 +5,33 @@ class Chronometer {
   }
 
   start(callback) {
-    this.intervalId = setInterval(() => {this.currentTime++
-    callback();
-    }, 1000);
+    this.intervalId = setInterval(() => {
+      this.currentTime++
+      callback();
+    }, 10);
   }
 
   getMinutes() {
-    if(this.currentTime > 60){
-      return Math.floor(this.currenTime/60);
+    if(this.currentTime > 6000){
+      return Math.floor(this.currentTime/6000);
     }else{
-      return this.currenTime;
+      return 0;
     }
   }
 
   getSeconds() {
-    if(this.currentTime > 60){
-      return this.currenTime % 60;
+    if(this.currentTime > 6000){
+      return Math.floor((this.currentTime % 6000) / 100);
     }else{
-      return this.currenTime;
+      return Math.floor(this.currentTime / 100);
+    }
+  }
+
+  getMilliseconds() {
+    if(this.currentTime > 100){
+      return Math.floor(this.currentTime % 100);
+    }else{
+      return Math.floor(this.currentTime); 
     }
   }
 
@@ -36,18 +45,20 @@ class Chronometer {
   }
 
   stop() {
-    clearInterval(intervalId);
+    clearInterval(this.intervalId);
   }
 
   reset() {
-    this.currenTime = 0;
+    this.currentTime = 0;
   }
 //
   split() {
-    let min = this.computeTwoDigitNumber(getMinutes())
-    let sec = this.computeTwoDigitNumber(getSeconds())
+    let min = this.computeTwoDigitNumber(this.getMinutes())
+    let sec = this.computeTwoDigitNumber(this.getSeconds())
+    let milli = this.computeTwoDigitNumber(this.getMilliseconds())
+    console.log(milli)
     if(min.length > 0 && sec.length > 0){
-      return `${min}:${sec}`;
+      return `${min}:${sec}:${milli}`;
     }
   }
 }
